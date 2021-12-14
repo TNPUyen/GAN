@@ -6,6 +6,7 @@ import 'package:gan/constants/style.dart';
 import 'package:gan/helpers/responsive.dart';
 import 'package:gan/routes/route.dart';
 import 'package:gan/widgets/buttons/custom_button.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePageContent extends StatelessWidget {
   const HomePageContent({
@@ -33,14 +34,14 @@ class HomePageContent extends StatelessWidget {
             ),
           Text(
             'GAN',
-            style: TextStyle(fontSize: ResponsiveWidget.isSmallScreen(context) ? 50 : 80, fontWeight: FontWeight.w800),
+            style: GoogleFonts.mavenPro(fontSize: ResponsiveWidget.isSmallScreen(context) ? 50 : 80, fontWeight: FontWeight.w800),
           ),
           SizedBox(
             height: size.width * 0.005,
           ),
           Text(
             'Lorem ipsum',
-            style: TextStyle(fontSize: ResponsiveWidget.isSmallScreen(context) ? 32 : 50, fontWeight: FontWeight.w800),
+            style: GoogleFonts.mavenPro(fontSize: ResponsiveWidget.isSmallScreen(context) ? 32 : 50, fontWeight: FontWeight.w800),
           ),
           SizedBox(
             height: size.width * 0.005,
@@ -48,7 +49,7 @@ class HomePageContent extends StatelessWidget {
           Text(
             'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
             style:
-                TextStyle(fontSize: 18, fontWeight: FontWeight.w300, height: 1.6),
+                GoogleFonts.mavenPro(fontSize: 18, fontWeight: FontWeight.w300, height: 1.6),
           ),
           SizedBox(
             height: size.width * 0.01,

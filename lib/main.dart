@@ -3,8 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:gan/controllers/navbar_controller.dart';
 import 'package:gan/layout.dart';
-import 'package:gan/pages/home/home.dart';
-import 'package:gan/pages/repairphoto/repairphoto_page.dart';
 import 'package:gan/routes/route.dart';
 import 'package:get/get.dart';
 import 'package:url_strategy/url_strategy.dart';
