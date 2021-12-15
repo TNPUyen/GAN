@@ -6,7 +6,7 @@ AppBar mobileNavbar(GlobalKey<ScaffoldState> key) => AppBar(
      leading: IconButton(icon: Icon(Icons.menu, color: Colors.amberAccent,), onPressed: (){
       key.currentState!.openDrawer();
     },),
-      title: Image.asset("assets/images/logo.png"),
+      title: Image.asset("assets/images/logo.png",  width: 120, height: 50,),
       centerTitle: true,
       elevation: 0,
       backgroundColor: Colors.transparent,

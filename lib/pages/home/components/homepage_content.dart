@@ -34,14 +34,14 @@ class HomePageContent extends StatelessWidget {
             ),
           Text(
             'GAN',
-            style: GoogleFonts.mavenPro(fontSize: ResponsiveWidget.isSmallScreen(context) ? 50 : 80, fontWeight: FontWeight.w800),
+            style: GoogleFonts.mavenPro(fontSize: ResponsiveWidget.isSmallScreen(context) ? 40 : 80, fontWeight: FontWeight.w800),
           ),
           SizedBox(
             height: size.width * 0.005,
           ),
           Text(
             'Lorem ipsum',
-            style: GoogleFonts.mavenPro(fontSize: ResponsiveWidget.isSmallScreen(context) ? 32 : 50, fontWeight: FontWeight.w800),
+            style: GoogleFonts.mavenPro(fontSize: ResponsiveWidget.isSmallScreen(context) ? 28 : 50, fontWeight: FontWeight.w800),
           ),
           SizedBox(
             height: size.width * 0.005,
@@ -49,10 +49,10 @@ class HomePageContent extends StatelessWidget {
           Text(
             'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
             style:
-                GoogleFonts.mavenPro(fontSize: 18, fontWeight: FontWeight.w300, height: 1.6),
+                GoogleFonts.mavenPro(fontSize: 16, fontWeight: FontWeight.w300, height: 1.6),
           ),
           SizedBox(
-            height: size.width * 0.01,
+            height: size.width * 0.05,
           ),
           Wrap(
             runSpacing: 8,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gan/helpers/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomButtonHoverAnimation extends StatefulWidget {
@@ -113,14 +114,14 @@ class _CustomButtonHoverAnimationState
                       ? Text(
                           widget.title,
                           style: GoogleFonts.mavenPro(
-                              fontSize: 21.0,
+                              fontSize: ResponsiveWidget.isSmallScreen(context)? 18 : 21.0,
                               fontWeight: FontWeight.w600,
                               color: animate ? Colors.black87: Colors.white),
                         )
                       : Text(
                           widget.title,
                           style: GoogleFonts.mavenPro(
-                              fontSize: 21.0,
+                              fontSize: ResponsiveWidget.isSmallScreen(context)? 18 : 21.0,
                               fontWeight: FontWeight.w600,
                               color: animate != isdark
                                   ? Colors.white

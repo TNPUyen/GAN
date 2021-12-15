@@ -42,7 +42,7 @@ class DesktopNavbarItem extends StatelessWidget {
                         color: navBarController.isHovering(itemName) ||
                                 navBarController.isActive(itemName)
                             ? active
-                            : Colors.grey[600]),
+                            : lightTextColor),
                   ),
                 ),
                 SizedBox(

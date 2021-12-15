@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:gan/constants/style.dart';
+import 'package:gan/helpers/responsive.dart';
 
 class RepairedImageDisplay extends StatelessWidget {
   const RepairedImageDisplay({
@@ -17,13 +18,6 @@ class RepairedImageDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-            width: size.width * 0.3,
-            child: Image.memory(
-              imageSelected!,
-              // width: size.width * 0.3,
-              height: size.height * 0.5,
-            )),
         Text(
           "AFTER",
           style: TextStyle(
@@ -34,6 +28,15 @@ class RepairedImageDisplay extends StatelessWidget {
             color: lightTextColor,
           ),
         ),
+        SizedBox(
+            width: ResponsiveWidget.isLargeScreen(context)
+                ? size.width * 0.3
+                : size.width * 0.5,
+            child: Image.memory(
+              imageSelected!,
+              // width: size.width * 0.3,
+              height: size.height * 0.5,
+            )),
       ],
     );
   }
@@ -56,13 +59,6 @@ class SeletedImageDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-            width: size.width * 0.3,
-            child: Image.memory(
-              imageSelected!,
-              // width: repair == true ? size.width * 0.3 : size.width * 0.5,
-              height: size.height * 0.5,
-            )),
         Text(
           "BEFORE",
           style: TextStyle(
@@ -73,6 +69,15 @@ class SeletedImageDisplay extends StatelessWidget {
             color: lightTextColor,
           ),
         ),
+        SizedBox(
+            width: ResponsiveWidget.isLargeScreen(context)
+                ? size.width * 0.3
+                : size.width * 0.5,
+            child: Image.memory(
+              imageSelected!,
+              // width: repair == true ? size.width * 0.3 : size.width * 0.5,
+              height: size.height * 0.5,
+            )),
       ],
     );
   }

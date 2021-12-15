@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-int smallScreenWidth = 852;
+int smallScreenWidth = 650;
+int mediumScreenwidth = 852;
 int largeScreenWidth = 1200;
-bool isMobile(BuildContext context) => MediaQuery.of(context).size.width < 650;
 
 class ResponsiveWidget extends StatelessWidget {
   final Widget largeScreen;

@@ -21,7 +21,7 @@ class DesktopNavbar extends StatelessWidget {
             SizedBox(
               width: size.width * 0.01,
             ),
-            Image.asset("assets/images/logo.png"),
+            Image.asset("assets/images/logo.png", width: 120, height: 50,),
             Expanded(
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,

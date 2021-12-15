@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:gan/helpers/responsive.dart';
 import 'package:gan/widgets/buttons/components/custom_button_animation.dart';
 import 'package:get/get.dart';
 
@@ -24,7 +25,7 @@ class MainCustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomButtonHoverAnimation(
       height: 50,
-      width: 200,
+      width: ResponsiveWidget.isSmallScreen(context)? 150 :200,
       thickness: 1.2,
       curve: Curves.easeInOutSine,
       milliseconds: 500,
