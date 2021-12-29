@@ -141,18 +141,12 @@ class _SmallScreenRepairPhotoContentState
   }
 
   _download(image, fileName) async {
-    setState(() => {loading = true});
-    String? saved = await FilePicker.platform.getDirectoryPath(
-      dialogTitle: 'Saved this file?',
-    );
-    // print(saved);
-    setState(() => {loading = false});
+    // setState(() => {loading = true});
+    // String? saved = await FilePicker.platform.getDirectoryPath(
+    //   dialogTitle: 'Saved this file?',
+    // );
+    // // print(saved);
+    // setState(() => {loading = false});
   }
 
-  bool checkPlatform() {
-    if (kIsWeb) {
-      return true;
-    }
-    return false;
-  }
 }

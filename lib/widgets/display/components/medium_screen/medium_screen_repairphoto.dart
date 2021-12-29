@@ -5,7 +5,6 @@ import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:gan/widgets/display/image_display.dart';
-import 'package:path/path.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gan/constants/style.dart';
@@ -33,7 +32,7 @@ class _MediumScreenRepairPhotoContentState
 
   @override
   Widget build(BuildContext context) {
-    final fileName = image != null ? basename(image!.path) : "";
+    // final fileName = image != null ? basename(image!.path) : "";
     Size size = MediaQuery.of(context).size;
 
     return SizedBox(
