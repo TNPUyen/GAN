@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:gan/helpers/responsive.dart';
 import 'package:gan/widgets/display/image_display.dart';
 import 'package:path/path.dart';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gan/constants/style.dart';
@@ -23,7 +24,9 @@ class _LargeScreenRepairPhotoContentState
     extends State<LargeScreenRepairPhotoContent> {
   File? image;
   Uint8List? imageSelected;
+  Uint8List? imageRepaired;
   bool? repair;
+  String? base64Image;
 
   @override
   void initState() {
@@ -112,7 +115,7 @@ class _LargeScreenRepairPhotoContentState
                   ),
                   if (repair == true)
                     LargeScreenButton(
-                      onPressed: _repair,
+                      onPressed: () => _download(image, fileName),
                       title: "Tải ảnh xuống",
                       color: active,
                       icon: Icons.download,
@@ -138,16 +141,20 @@ class _LargeScreenRepairPhotoContentState
     if (result == null) return;
     final name = result.files.single.name;
     final path = result.files.single.bytes;
+    // List<int> imageBytes = File(result.files.single.path!).readAsBytesSync();
+    base64Image = base64Encode(path!);
 
     setState(() => {image = File(name), imageSelected = path, repair = false});
   }
 
   void _repair() {
+    imageRepaired = base64Decode(base64Image!);
     setState(() => {repair = true});
+
     // print(check);
   }
 
-  _download(image, fileName) async {
+  Future _download(image, fileName) async {
     // Uint8List pngBytes = image!.buffer.asUint8List();
     // final _base64 = base64Encode(pngBytes);
     // final anchorElement = AnchorElement()
@@ -155,6 +162,8 @@ class _LargeScreenRepairPhotoContentState
     //   ..download = fileName + '_new';
     //
     // anchorElement.click();
-    // anchorElement.remove();
+    // // anchorElement.remove();
+    // String? selectedDirectory = await FilePicker.platform.getDirectoryPath(dialogTitle: 'want to save it?');
+    // print(selectedDirectory);
   }
 }

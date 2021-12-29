@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gan/constants/style.dart';
 import 'package:gan/helpers/responsive.dart';
@@ -7,11 +9,13 @@ import 'package:gan/helpers/responsive.dart';
 class RepairedImageDisplay extends StatelessWidget {
   const RepairedImageDisplay({
     Key? key,
-    required this.imageSelected,
+    this.imageSelected,
+    this.imageRepaired,
     required this.size,
   }) : super(key: key);
 
   final Uint8List? imageSelected;
+  final File? imageRepaired;
   final Size size;
 
   @override
@@ -32,8 +36,12 @@ class RepairedImageDisplay extends StatelessWidget {
             width: ResponsiveWidget.isLargeScreen(context)
                 ? size.width * 0.3
                 : size.width * 0.5,
-            child: Image.memory(
+            child: kIsWeb ? Image.memory(
               imageSelected!,
+              // width: size.width * 0.3,
+              height: size.height * 0.5,
+            ): Image.file(
+              imageRepaired!,
               // width: size.width * 0.3,
               height: size.height * 0.5,
             )),
@@ -47,12 +55,14 @@ class SeletedImageDisplay extends StatelessWidget {
 
   const SeletedImageDisplay({
     Key? key,
-    required this.imageSelected,
+    this.imageSelected,
+    this.imageRepaired,
     required this.repair,
     required this.size,
   }) : super(key: key);
 
   final Uint8List? imageSelected;
+  final File? imageRepaired;
   final Size size;
 
   @override
@@ -73,11 +83,16 @@ class SeletedImageDisplay extends StatelessWidget {
             width: ResponsiveWidget.isLargeScreen(context)
                 ? size.width * 0.3
                 : size.width * 0.5,
-            child: Image.memory(
-              imageSelected!,
-              // width: repair == true ? size.width * 0.3 : size.width * 0.5,
-              height: size.height * 0.5,
-            )),
+            child:  kIsWeb
+                ? Image.memory(
+                    imageSelected!,
+                    height: size.height * 0.5,
+                  )
+                : Image.file(
+                    imageRepaired!,
+                    // width: repair == true ? size.width * 0.3 : size.width * 0.5,
+                    height: size.height * 0.5,
+                  )),
       ],
     );
   }

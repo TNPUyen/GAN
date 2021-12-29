@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:gan/widgets/display/image_display.dart';
 import 'package:path/path.dart';
 
@@ -36,7 +37,7 @@ class _MediumScreenRepairPhotoContentState
     Size size = MediaQuery.of(context).size;
 
     return SizedBox(
-      width: repair == true ? size.width * 0.8 : size.width * 0.6,
+      width: size.width * 0.75,
       child: Card(
         elevation: 5,
         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
@@ -54,10 +55,13 @@ class _MediumScreenRepairPhotoContentState
             children: <Widget>[
               imageSelected != null
                   ? repair == true
-                      ? RepairedImageDisplay(
-                          imageSelected: imageSelected, size: size)
+                       ? RepairedImageDisplay(
+                          imageSelected: imageSelected,
+                          imageRepaired: image,
+                          size: size)
                       : SeletedImageDisplay(
                           imageSelected: imageSelected,
+                          imageRepaired: image,
                           repair: repair!,
                           size: size)
                   : SizedBox(
@@ -114,6 +118,7 @@ class _MediumScreenRepairPhotoContentState
   }
 
   void _upload() async {
+    dynamic path;
     final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['jpg', 'png'],
@@ -121,9 +126,13 @@ class _MediumScreenRepairPhotoContentState
 
     if (result == null) return;
     final name = result.files.single.name;
-    final path = result.files.single.bytes;
-
-    setState(() => {image = File(name), imageSelected = path, repair = false});
+    kIsWeb ? path = result.files.single.bytes : path = result.files.single.path;
+    setState(() => {
+          kIsWeb
+              ? {image = File(name), imageSelected = path}
+              : image = File(path!),
+          repair = false
+        });
   }
 
   void _repair() {
