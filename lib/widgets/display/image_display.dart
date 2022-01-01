@@ -23,7 +23,7 @@ class RepairedImageDisplay extends StatelessWidget {
     return Column(
       children: [
         Text(
-          "AFTER",
+          "SAU",
           style: TextStyle(
             fontSize: 20,
             letterSpacing: 2,
@@ -35,11 +35,11 @@ class RepairedImageDisplay extends StatelessWidget {
         SizedBox(
             width: ResponsiveWidget.isLargeScreen(context)
                 ? size.width * 0.3
-                : size.width * 0.5,
+                : size.width * 0.6,
             child: kIsWeb ? Image.memory(
               imageSelected!,
               // width: size.width * 0.3,
-              height: size.height * 0.5,
+              height: size.height * 0.5,  
             ): Image.file(
               imageRepaired!,
               // width: size.width * 0.3,
@@ -70,7 +70,7 @@ class SeletedImageDisplay extends StatelessWidget {
     return Column(
       children: [
         Text(
-          "BEFORE",
+          "TRƯỚC",
           style: TextStyle(
             fontSize: 20,
             letterSpacing: 2,
@@ -82,7 +82,7 @@ class SeletedImageDisplay extends StatelessWidget {
         SizedBox(
             width: ResponsiveWidget.isLargeScreen(context)
                 ? size.width * 0.3
-                : size.width * 0.5,
+                : size.width * 0.6,
             child:  kIsWeb
                 ? Image.memory(
                     imageSelected!,

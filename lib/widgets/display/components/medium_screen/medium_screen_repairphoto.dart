@@ -1,10 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:gan/services/upload_image_service.dart';
 import 'package:gan/widgets/display/image_display.dart';
+import 'package:path/path.dart';
+
 
 import 'package:flutter/material.dart';
 import 'package:gan/constants/style.dart';
@@ -22,6 +26,7 @@ class _MediumScreenRepairPhotoContentState
     extends State<MediumScreenRepairPhotoContent> {
   File? image;
   Uint8List? imageSelected;
+  Uint8List? imageRepaired;
   bool? repair;
 
   @override
@@ -32,7 +37,7 @@ class _MediumScreenRepairPhotoContentState
 
   @override
   Widget build(BuildContext context) {
-    // final fileName = image != null ? basename(image!.path) : "";
+    final fileName = image != null ? basename(image!.path) : "";
     Size size = MediaQuery.of(context).size;
 
     return SizedBox(
@@ -99,7 +104,7 @@ class _MediumScreenRepairPhotoContentState
                   ),
                   if (repair == true)
                     LargeScreenButton(
-                      onPressed: _repair,
+                      onPressed: () => _repair(imageSelected, fileName),
                       title: "Tải ảnh xuống",
                       color: active,
                       icon: Icons.download,
@@ -134,9 +139,11 @@ class _MediumScreenRepairPhotoContentState
         });
   }
 
-  void _repair() {
+  void _repair(imageSelected, filename) async{
+    UploadImage uploadImage = UploadImage();
+    var result = await uploadImage.uploadImage(imageSelected, filename);
+    imageRepaired = base64Decode(result['content']);
     setState(() => {repair = true});
-    // print(check);
   }
 
   _download(image, fileName) async {

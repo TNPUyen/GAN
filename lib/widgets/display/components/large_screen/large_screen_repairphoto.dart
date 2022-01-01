@@ -3,7 +3,9 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
+// import 'package:file_picker_cross/file_picker_cross.dart';
 import 'package:gan/helpers/responsive.dart';
+import 'package:gan/services/upload_image_service.dart';
 import 'package:gan/widgets/display/image_display.dart';
 import 'package:path/path.dart';
 import 'dart:convert';
@@ -53,7 +55,8 @@ class _LargeScreenRepairPhotoContentState
           ),
           child: Row(
             // runSpacing: 5,
-            // crossAxisAlignment: WrapCrossAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             // alignment: WrapAlignment.center,
             children: <Widget>[
               imageSelected != null
@@ -105,7 +108,7 @@ class _LargeScreenRepairPhotoContentState
                   ),
                   if (imageSelected != null && repair == false)
                     LargeScreenButton(
-                      onPressed: _repair,
+                      onPressed: () => _repair(imageSelected, fileName),
                       title: "Sửa ảnh",
                       color: active,
                       icon: Icons.auto_fix_high,
@@ -137,18 +140,25 @@ class _LargeScreenRepairPhotoContentState
         type: FileType.custom,
         allowedExtensions: ['jpg', 'png'],
         allowMultiple: false);
+    // final result = await FilePickerCross.importFromStorage(
+    //   type: FileTypeCross.image,
+    //   fileExtension: 'jpg, png'
+    // );
 
     if (result == null) return;
     final name = result.files.single.name;
     final path = result.files.single.bytes;
-    // List<int> imageBytes = File(result.files.single.path!).readAsBytesSync();
     base64Image = base64Encode(path!);
 
     setState(() => {image = File(name), imageSelected = path, repair = false});
+    // result.exportToStorage();
   }
 
-  void _repair() {
-    imageRepaired = base64Decode(base64Image!);
+  void _repair(imageSelected, filename) async{
+    
+    UploadImage uploadImage = UploadImage();
+    var result = await uploadImage.uploadImage(imageSelected, filename);
+    imageRepaired = base64Decode(result['content']);
     setState(() => {repair = true});
 
     // print(check);

@@ -1,15 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:gan/services/upload_image_service.dart';
 import 'package:gan/widgets/display/image_display.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path/path.dart';
 
 import 'package:flutter/material.dart';
 import 'package:gan/constants/style.dart';
 import 'package:gan/widgets/display/components/buttons/large_screen_button.dart';
+import 'package:path_provider/path_provider.dart';
 
 class SmallScreenRepairPhotoContent extends StatefulWidget {
   const SmallScreenRepairPhotoContent({Key? key}) : super(key: key);
@@ -23,6 +27,7 @@ class _SmallScreenRepairPhotoContentState
     extends State<SmallScreenRepairPhotoContent> {
   File? image;
   Uint8List? imageSelected;
+  Uint8List? imageRepaired;
   bool? repair;
   bool? loading;
 
@@ -38,7 +43,7 @@ class _SmallScreenRepairPhotoContentState
     Size size = MediaQuery.of(context).size;
 
     return SizedBox(
-      width: repair == true ? size.width * 0.8 : size.width * 0.7,
+      width: size.width * 0.8,
       child: Card(
         elevation: 5,
         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
@@ -90,7 +95,7 @@ class _SmallScreenRepairPhotoContentState
                   ),
                   if (image != null && repair == false)
                     LargeScreenButton(
-                      onPressed: _repair,
+                      onPressed: () => _repair(imageSelected, fileName),
                       title: "Sửa ảnh",
                       color: active,
                       icon: Icons.auto_fix_high,
@@ -100,7 +105,7 @@ class _SmallScreenRepairPhotoContentState
                   ),
                   if (repair == true)
                     LargeScreenButton(
-                      onPressed: () => _download(image, fileName),
+                      onPressed: () => _download(imageSelected, fileName),
                       title: "Tải ảnh xuống",
                       color: active,
                       icon: Icons.download,
@@ -130,23 +135,39 @@ class _SmallScreenRepairPhotoContentState
     setState(() => {
           kIsWeb
               ? {image = File(name), imageSelected = path}
-              : image = File(path!),
+              : {
+                  image = File(path!),
+                  imageSelected = File(path!).readAsBytesSync()
+                },
           repair = false
         });
+    // final result = await FilePickerCross.importFromStorage(
+    // //     // type: FileTypeCross.image,
+    // //     // fileExtension: 'jpg, png'
+    // );
   }
 
-  void _repair() {
+void _repair(imageSelected, filename) async{
+    
+    UploadImage uploadImage = UploadImage();
+    var result = await uploadImage.uploadImage(imageSelected, filename);
+    imageRepaired = base64Decode(result['content']);
     setState(() => {repair = true});
+
     // print(check);
   }
 
   _download(image, fileName) async {
-    // setState(() => {loading = true});
-    // String? saved = await FilePicker.platform.getDirectoryPath(
-    //   dialogTitle: 'Saved this file?',
-    // );
-    // // print(saved);
-    // setState(() => {loading = false});
+    if (kIsWeb) {
+    } else {
+      Directory? dir = await getExternalStorageDirectory();
+      if (await dir!.exists()) {
+        File saveFile = File(dir.path + "/$fileName");
+        await saveFile.writeAsBytes(image);
+        if (image != null) {
+          await ImageGallerySaver.saveImage(image);
+        }
+      }
+    }
   }
-
 }
