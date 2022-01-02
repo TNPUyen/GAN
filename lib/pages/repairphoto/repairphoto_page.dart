@@ -36,7 +36,7 @@ class _RepairPhotoPageState extends State<RepairPhotoPage> {
         children: <Widget>[
           Center(
             child: Text(
-              "Sửa ảnh cũ",
+              "Phục hồi ảnh cũ",
               style: GoogleFonts.mavenPro(
                 fontSize: 50,
                 letterSpacing: 3,

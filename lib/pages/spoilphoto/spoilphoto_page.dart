@@ -36,7 +36,7 @@ class _SpoilPhotoPageState extends State<SpoilPhotoPage> {
         children: <Widget>[
           Center(
             child: Text(
-              "Tạo ảnh cũ",
+              "Tạo ảnh thông qua bộ lọc",
               style: GoogleFonts.mavenPro(
                 fontSize: 50,
                 letterSpacing: 3,

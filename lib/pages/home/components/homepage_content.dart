@@ -1,4 +1,3 @@
-
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ class HomePageContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  EdgeInsets.only(left: size.width*0.01),
+      padding: EdgeInsets.only(left: size.width * 0.01),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,22 +33,31 @@ class HomePageContent extends StatelessWidget {
             ),
           Text(
             'GAN',
-            style: GoogleFonts.mavenPro(fontSize: ResponsiveWidget.isSmallScreen(context) ? 40 : 80, fontWeight: FontWeight.w800),
+            style: GoogleFonts.mavenPro(
+                fontSize: ResponsiveWidget.isSmallScreen(context) ? 40 : 80,
+                fontWeight: FontWeight.w800),
           ),
           SizedBox(
             height: size.width * 0.005,
           ),
           Text(
-            'Lorem ipsum',
-            style: GoogleFonts.mavenPro(fontSize: ResponsiveWidget.isSmallScreen(context) ? 28 : 50, fontWeight: FontWeight.w800),
+            'Đồ án chuyên ngành A',
+            style: GoogleFonts.mavenPro(
+                fontSize: ResponsiveWidget.isSmallScreen(context) ? 28 : 50,
+                fontWeight: FontWeight.w800),
           ),
           SizedBox(
             height: size.width * 0.005,
           ),
           Text(
-            'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-            style:
-                GoogleFonts.mavenPro(fontSize: 16, fontWeight: FontWeight.w300, height: 1.6),
+            'Được thực hiện bởi',
+            style: GoogleFonts.mavenPro(
+                fontSize: 16, fontWeight: FontWeight.w300, height: 1.6),
+          ),
+          Text(
+            'Trần Ngọc Phương Uyên\nVăn Hữu Gia Kiên',
+            style: GoogleFonts.mavenPro(
+                fontSize: 16, fontWeight: FontWeight.bold, height: 1.6),
           ),
           SizedBox(
             height: size.width * 0.05,
@@ -59,22 +67,20 @@ class HomePageContent extends StatelessWidget {
             // ignore: prefer_const_literals_to_create_immutables
             children: <Widget>[
               MainCustomButton(
-                title: 'Sửa ảnh',
-                active: active,
-                nonactive: nonactive,
-                dark: true,
-                pageRoute: '/'+ repairPhotoRoute
-              ),
+                  title: 'Sửa ảnh',
+                  active: active,
+                  nonactive: nonactive,
+                  dark: true,
+                  pageRoute: '/' + repairPhotoRoute),
               SizedBox(
                 width: size.width * 0.01,
               ),
               MainCustomButton(
-                title: 'Tạo ảnh cũ',
-                active: active,
-                nonactive: nonactive,
-                dark: false,
-                pageRoute: '/'+ spoilPhotoRoute
-              ),
+                  title: 'Tạo ảnh cũ',
+                  active: active,
+                  nonactive: nonactive,
+                  dark: false,
+                  pageRoute: '/' + spoilPhotoRoute),
             ],
           )
         ],

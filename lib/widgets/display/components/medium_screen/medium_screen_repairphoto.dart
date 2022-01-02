@@ -9,7 +9,6 @@ import 'package:gan/services/upload_image_service.dart';
 import 'package:gan/widgets/display/image_display.dart';
 import 'package:path/path.dart';
 
-
 import 'package:flutter/material.dart';
 import 'package:gan/constants/style.dart';
 import 'package:gan/widgets/display/components/buttons/large_screen_button.dart';
@@ -59,7 +58,7 @@ class _MediumScreenRepairPhotoContentState
             children: <Widget>[
               imageSelected != null
                   ? repair == true
-                       ? RepairedImageDisplay(
+                      ? RepairedImageDisplay(
                           imageSelected: imageSelected,
                           imageRepaired: image,
                           size: size)
@@ -95,7 +94,7 @@ class _MediumScreenRepairPhotoContentState
                   if (imageSelected != null && repair == false)
                     LargeScreenButton(
                       onPressed: _repair,
-                      title: "Sửa ảnh",
+                      title: "Phục hồi ảnh",
                       color: active,
                       icon: Icons.auto_fix_high,
                     ),
@@ -139,7 +138,7 @@ class _MediumScreenRepairPhotoContentState
         });
   }
 
-  void _repair(imageSelected, filename) async{
+  void _repair(imageSelected, filename) async {
     UploadImage uploadImage = UploadImage();
     var result = await uploadImage.uploadImage(imageSelected, filename);
     imageRepaired = base64Decode(result['content']);

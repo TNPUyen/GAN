@@ -96,7 +96,7 @@ class _SmallScreenRepairPhotoContentState
                   if (image != null && repair == false)
                     LargeScreenButton(
                       onPressed: () => _repair(imageSelected, fileName),
-                      title: "Sửa ảnh",
+                      title: "Phục hồi ảnh",
                       color: active,
                       icon: Icons.auto_fix_high,
                     ),
@@ -147,8 +147,7 @@ class _SmallScreenRepairPhotoContentState
     // );
   }
 
-void _repair(imageSelected, filename) async{
-    
+  void _repair(imageSelected, filename) async {
     UploadImage uploadImage = UploadImage();
     var result = await uploadImage.uploadImage(imageSelected, filename);
     imageRepaired = base64Decode(result['content']);

@@ -75,7 +75,7 @@ class _LargeScreenRepairPhotoContentState
                               width: size.width * 0.03,
                             ),
                             RepairedImageDisplay(
-                                imageSelected: imageSelected, size: size),
+                                imageSelected: imageRepaired, size: size),
                           ],
                         )
                       : SeletedImageDisplay(
@@ -109,7 +109,7 @@ class _LargeScreenRepairPhotoContentState
                   if (imageSelected != null && repair == false)
                     LargeScreenButton(
                       onPressed: () => _repair(imageSelected, fileName),
-                      title: "Sửa ảnh",
+                      title: "Phục hồi ảnh",
                       color: active,
                       icon: Icons.auto_fix_high,
                     ),
@@ -154,8 +154,7 @@ class _LargeScreenRepairPhotoContentState
     // result.exportToStorage();
   }
 
-  void _repair(imageSelected, filename) async{
-    
+  void _repair(imageSelected, filename) async {
     UploadImage uploadImage = UploadImage();
     var result = await uploadImage.uploadImage(imageSelected, filename);
     imageRepaired = base64Decode(result['content']);
