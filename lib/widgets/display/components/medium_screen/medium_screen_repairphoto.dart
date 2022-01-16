@@ -5,6 +5,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:gan/helpers/responsive.dart';
 import 'package:gan/services/upload_image_service.dart';
 import 'package:gan/widgets/display/image_display.dart';
 import 'package:path/path.dart';
@@ -15,8 +16,23 @@ import 'package:gan/constants/style.dart';
 import 'package:gan/widgets/display/components/buttons/large_screen_button.dart';
 
 class MediumScreenRepairPhotoContent extends StatefulWidget {
-  const MediumScreenRepairPhotoContent({Key? key}) : super(key: key);
+  final void Function() upload;
+  final void Function() repair;
+  final Uint8List? imageSelected;
+  final File? image;
+  final bool? isRepair;
+  final bool? isLoading;
 
+  const MediumScreenRepairPhotoContent(
+      {Key? key,
+      required this.upload,
+      required this.repair,
+      required this.imageSelected,
+      required this.image, 
+      required this.isRepair,
+      required this.isLoading
+      })
+      : super(key: key);
   @override
   _MediumScreenRepairPhotoContentState createState() =>
       _MediumScreenRepairPhotoContentState();
@@ -24,22 +40,17 @@ class MediumScreenRepairPhotoContent extends StatefulWidget {
 
 class _MediumScreenRepairPhotoContentState
     extends State<MediumScreenRepairPhotoContent> {
-  File? image;
-  Uint8List? imageSelected;
-  Uint8List? imageRepaired;
-  bool? repair;
 
   @override
   void initState() {
-    repair = false;
+    // repair = false;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final fileName = image != null ? basename(image!.path) : "";
+    // final fileName = image != null ? basename(image!.path) : "";
     Size size = MediaQuery.of(context).size;
-
     return SizedBox(
       width: size.width * 0.75,
       child: Card(
@@ -57,21 +68,26 @@ class _MediumScreenRepairPhotoContentState
             crossAxisAlignment: WrapCrossAlignment.center,
             alignment: WrapAlignment.center,
             children: <Widget>[
-              imageSelected != null
-                  ? repair == true
+              widget.imageSelected != null
+                  ? widget.isRepair == true
                        ? RepairedImageDisplay(
-                          imageSelected: imageSelected,
-                          imageRepaired: image,
+                          imageSelected: widget.imageSelected,
+                          imageRepaired: widget.image,
                           size: size)
-                      : SeletedImageDisplay(
-                          imageSelected: imageSelected,
-                          imageRepaired: image,
-                          repair: repair!,
+                      : widget.isLoading == true ? 
+                          SizedBox(
+                          width: size.width * 0.6,
+                          height: size.height * 0.5,
+                          child: Center(child: CircularProgressIndicator(color: Colors.black,)),)
+                        : SeletedImageDisplay(
+                          imageSelected: widget.imageSelected,
+                          imageRepaired: widget.image,
+                          repair: widget.isRepair!,
                           size: size)
                   : SizedBox(
                       child: Image.asset(
                       "assets/images/upload_image.png",
-                      width: size.width * 0.5,
+                      width: size.width * 0.6,
                       height: size.height * 0.5,
                     )),
               SizedBox(
@@ -82,9 +98,9 @@ class _MediumScreenRepairPhotoContentState
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   LargeScreenButton(
-                    onPressed: _upload,
+                    onPressed: widget.upload,
                     title: "Tải ảnh lên",
-                    color: imageSelected != null || repair == true
+                    color: widget.imageSelected != null || widget.isRepair == true
                         ? Colors.white
                         : active,
                     icon: Icons.upload,
@@ -92,19 +108,19 @@ class _MediumScreenRepairPhotoContentState
                   SizedBox(
                     height: size.width * 0.01,
                   ),
-                  if (imageSelected != null && repair == false)
+                  if (widget.imageSelected != null && widget.isRepair == false)
                     LargeScreenButton(
-                      onPressed: _repair,
-                      title: "Sửa ảnh",
+                      onPressed: () => widget.repair(),
+                      title: "Phục hồi ảnh",
                       color: active,
                       icon: Icons.auto_fix_high,
                     ),
                   SizedBox(
                     height: size.width * 0.01,
                   ),
-                  if (repair == true)
+                  if (widget.isRepair == true)
                     LargeScreenButton(
-                      onPressed: () => _repair(imageSelected, fileName),
+                      onPressed: () => {},
                       title: "Tải ảnh xuống",
                       color: active,
                       icon: Icons.download,
@@ -121,39 +137,7 @@ class _MediumScreenRepairPhotoContentState
     );
   }
 
-  void _upload() async {
-    dynamic path;
-    final result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['jpg', 'png'],
-        allowMultiple: false);
-
-    if (result == null) return;
-    final name = result.files.single.name;
-    kIsWeb ? path = result.files.single.bytes : path = result.files.single.path;
-    setState(() => {
-          kIsWeb
-              ? {image = File(name), imageSelected = path}
-              : image = File(path!),
-          repair = false
-        });
-  }
-
-  void _repair(imageSelected, filename) async{
-    UploadImage uploadImage = UploadImage();
-    var result = await uploadImage.uploadImage(imageSelected, filename);
-    imageRepaired = base64Decode(result['content']);
-    setState(() => {repair = true});
-  }
 
   _download(image, fileName) async {
-    // Uint8List pngBytes = image!.buffer.asUint8List();
-    // final _base64 = base64Encode(pngBytes);
-    // final anchorElement = AnchorElement()
-    //   ..href = 'data:application/octet-stream;base64,$_base64'
-    //   ..download = fileName + '_new';
-    //
-    // anchorElement.click();
-    // anchorElement.remove();
   }
 }

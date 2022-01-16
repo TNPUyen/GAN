@@ -8,10 +8,10 @@ import 'package:gan/pages/spoilphoto/spoilphoto_page.dart';
 const homePageDisplayName = "Trang chủ";
 const homePageRoute = "home";
 
-const repairPhotoDisplayName = "Sửa ảnh";
+const repairPhotoDisplayName = "Phục hồi ảnh";
 const repairPhotoRoute = "repairphoto";
 
-const spoilPhotoDisplayName = "Tạo ảnh cũ";
+const spoilPhotoDisplayName = "Tạo bộ lọc cho ảnh";
 const spoilPhotoRoute = "spoilphoto";
 
 Map<String, Widget> innerRoute = {

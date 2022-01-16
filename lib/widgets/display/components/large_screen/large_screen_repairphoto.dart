@@ -15,7 +15,22 @@ import 'package:gan/constants/style.dart';
 import 'package:gan/widgets/display/components/buttons/large_screen_button.dart';
 
 class LargeScreenRepairPhotoContent extends StatefulWidget {
-  const LargeScreenRepairPhotoContent({Key? key}) : super(key: key);
+  final void Function() upload;
+  final void Function() repair;
+  final Uint8List? imageSelected;
+  final Uint8List? imageRepaired;
+  final bool? isRepair;
+  final bool? isLoading;
+
+  const LargeScreenRepairPhotoContent(
+      {Key? key,
+      required this.upload,
+      required this.repair,
+      required this.imageSelected,
+      required this.imageRepaired, 
+      required this.isRepair, 
+      required this.isLoading})
+      : super(key: key);
 
   @override
   _LargeScreenRepairPhotoContentState createState() =>
@@ -24,25 +39,25 @@ class LargeScreenRepairPhotoContent extends StatefulWidget {
 
 class _LargeScreenRepairPhotoContentState
     extends State<LargeScreenRepairPhotoContent> {
-  File? image;
-  Uint8List? imageSelected;
-  Uint8List? imageRepaired;
-  bool? repair;
-  String? base64Image;
+  // File? image;
+  // Uint8List? imageSelected;
+  // Uint8List? imageRepaired;
+  // bool? repair;
+  // String? base64Image;
 
   @override
   void initState() {
-    repair = false;
+    // repair = false;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final fileName = image != null ? basename(image!.path) : "";
+    // final fileName = image != null ? basename(image!.path) : "";
     Size size = MediaQuery.of(context).size;
 
     return SizedBox(
-      width: repair == true ? size.width * 0.8 : size.width * 0.48,
+      width: widget.isRepair == true ? size.width * 0.85 : widget.isLoading == true ? size.width * 0.85: size.width * 0.53,
       child: Card(
         elevation: 5,
         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 16.0),
@@ -51,16 +66,15 @@ class _LargeScreenRepairPhotoContentState
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(
-            vertical: size.width * 0.01,
-          ),
+              vertical: size.width * 0.01, horizontal: size.width * 0.01),
           child: Row(
             // runSpacing: 5,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             // alignment: WrapAlignment.center,
-            children: <Widget>[
-              imageSelected != null
-                  ? repair == true
+            children: [
+              widget.imageSelected != null
+                  ? widget.isRepair == true
                       ? Row(
                           mainAxisAlignment:
                               ResponsiveWidget.isMediumScreen(context)
@@ -68,19 +82,40 @@ class _LargeScreenRepairPhotoContentState
                                   : MainAxisAlignment.start,
                           children: [
                             SeletedImageDisplay(
-                                imageSelected: imageSelected,
-                                repair: repair!,
+                                imageSelected: widget.imageSelected,
+                                repair: widget.isRepair!,
+                                size: size),
+                            SizedBox(
+                              width: size.width * 0.02,
+                            ),
+                            RepairedImageDisplay(
+                                imageSelected: widget.imageSelected, size: size),
+                          ],
+                        )
+                      :  widget.isLoading == true
+                        ? Row(
+                          mainAxisAlignment:
+                              ResponsiveWidget.isMediumScreen(context)
+                                  ? MainAxisAlignment.center
+                                  : MainAxisAlignment.start,
+                          children: [
+                            SeletedImageDisplay(
+                                imageSelected: widget.imageSelected,
+                                repair: widget.isRepair!,
                                 size: size),
                             SizedBox(
                               width: size.width * 0.03,
                             ),
-                            RepairedImageDisplay(
-                                imageSelected: imageSelected, size: size),
+                            SizedBox(
+                              width: ResponsiveWidget.isLargeScreen(context)
+                                  ? size.width * 0.3
+                                  : size.width * 0.6,
+                              child: Center(child: CircularProgressIndicator(color: Colors.black,)),),
                           ],
                         )
-                      : SeletedImageDisplay(
-                          imageSelected: imageSelected,
-                          repair: repair!,
+                        :SeletedImageDisplay(
+                          imageSelected: widget.imageSelected,
+                          repair: widget.isRepair!,
                           size: size)
                   : SizedBox(
                       child: Image.asset(
@@ -96,9 +131,9 @@ class _LargeScreenRepairPhotoContentState
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   LargeScreenButton(
-                    onPressed: _upload,
+                    onPressed: widget.upload,
                     title: "Tải ảnh lên",
-                    color: imageSelected != null || repair == true
+                    color: widget.imageSelected != null || widget.isRepair == true
                         ? Colors.white
                         : active,
                     icon: Icons.upload,
@@ -106,19 +141,19 @@ class _LargeScreenRepairPhotoContentState
                   SizedBox(
                     height: size.width * 0.01,
                   ),
-                  if (imageSelected != null && repair == false)
+                  if (widget.imageSelected != null && widget.isRepair == false)
                     LargeScreenButton(
-                      onPressed: () => _repair(imageSelected, fileName),
-                      title: "Sửa ảnh",
+                      onPressed: () => widget.repair(),
+                      title: "Phục hồi ảnh",
                       color: active,
                       icon: Icons.auto_fix_high,
                     ),
                   SizedBox(
                     height: size.width * 0.01,
                   ),
-                  if (repair == true)
+                  if (widget.isRepair == true)
                     LargeScreenButton(
-                      onPressed: () => _download(image, fileName),
+                      onPressed: () => {},
                       title: "Tải ảnh xuống",
                       color: active,
                       icon: Icons.download,
@@ -135,45 +170,7 @@ class _LargeScreenRepairPhotoContentState
     );
   }
 
-  void _upload() async {
-    final result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['jpg', 'png'],
-        allowMultiple: false);
-    // final result = await FilePickerCross.importFromStorage(
-    //   type: FileTypeCross.image,
-    //   fileExtension: 'jpg, png'
-    // );
-
-    if (result == null) return;
-    final name = result.files.single.name;
-    final path = result.files.single.bytes;
-    base64Image = base64Encode(path!);
-
-    setState(() => {image = File(name), imageSelected = path, repair = false});
-    // result.exportToStorage();
-  }
-
-  void _repair(imageSelected, filename) async{
-    
-    UploadImage uploadImage = UploadImage();
-    var result = await uploadImage.uploadImage(imageSelected, filename);
-    imageRepaired = base64Decode(result['content']);
-    setState(() => {repair = true});
-
-    // print(check);
-  }
 
   Future _download(image, fileName) async {
-    // Uint8List pngBytes = image!.buffer.asUint8List();
-    // final _base64 = base64Encode(pngBytes);
-    // final anchorElement = AnchorElement()
-    //   ..href = 'data:application/octet-stream;base64,$_base64'
-    //   ..download = fileName + '_new';
-    //
-    // anchorElement.click();
-    // // anchorElement.remove();
-    // String? selectedDirectory = await FilePicker.platform.getDirectoryPath(dialogTitle: 'want to save it?');
-    // print(selectedDirectory);
   }
 }
