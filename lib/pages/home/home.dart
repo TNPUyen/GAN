@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gan/helpers/responsive.dart';
+import 'package:gan/pages/home/components/big_image.dart';
 import 'package:gan/pages/home/components/homepage_content.dart';
 
 class HomePage extends StatelessWidget {
@@ -18,6 +19,7 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           Expanded(
+            flex: 6,
             child: Padding(
               padding: EdgeInsets.only(
                   left: size.width * 0.05, right: size.width * 0.01),
@@ -29,10 +31,12 @@ class HomePage extends StatelessWidget {
           if (ResponsiveWidget.isLargeScreen(context) ||
               ResponsiveWidget.isMediumScreen(context))
             Expanded(
-              child: Image.asset(
-                'assets/images/editphoto.png',
-                height: size.height * 0.8,
-              ),
+              // child: Image.asset(
+              //   'assets/images/editphoto.png',
+              //   height: size.height * 0.8,
+              // ),
+              flex: 8,
+              child: BigImage(size: size,),
             ),
         ],
       ),

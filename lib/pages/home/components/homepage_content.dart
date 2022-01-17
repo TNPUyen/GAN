@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gan/constants/style.dart';
 import 'package:gan/helpers/responsive.dart';
+import 'package:gan/pages/home/components/big_image.dart';
 import 'package:gan/routes/route.dart';
 import 'package:gan/widgets/buttons/custom_button.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,12 +26,13 @@ class HomePageContent extends StatelessWidget {
         // ignore: prefer_const_literals_to_create_immutables
         children: <Widget>[
           if (ResponsiveWidget.isSmallScreen(context))
-            SizedBox(
-              width: size.width * 0.8,
-              child: Image.asset(
-                'assets/images/editphoto.png',
-              ),
-            ),
+            // SizedBox(
+            //   width: size.width * 0.8,
+            //   child: Image.asset(
+            //     'assets/images/editphoto.png',
+            //   ),
+            // ),
+            BigImage(size: size),
           Text(
             'GAN',
             style: GoogleFonts.mavenPro(
@@ -41,7 +43,7 @@ class HomePageContent extends StatelessWidget {
             height: size.width * 0.005,
           ),
           Text(
-            'Đồ án chuyên ngành A',
+            'Generative Adversarial Network',
             style: GoogleFonts.mavenPro(
                 fontSize: ResponsiveWidget.isSmallScreen(context) ? 28 : 50,
                 fontWeight: FontWeight.w800),
@@ -56,18 +58,13 @@ class HomePageContent extends StatelessWidget {
           ),
           Text(
             'Trần Ngọc Phương Uyên\nVăn Hữu Gia Kiên',
-            style: GoogleFonts.mavenPro(
-                fontSize: 16, fontWeight: FontWeight.bold, height: 1.6),
-          ),
-          SizedBox(
-            height: size.width * 0.05,
           ),
           Wrap(
             runSpacing: 8,
-            // ignore: prefer_const_literals_to_create_immutables
             children: <Widget>[
               MainCustomButton(
-                  title: 'Sửa ảnh',
+                  index: 0,
+                  title: 'Phục hồi ảnh',
                   active: active,
                   nonactive: nonactive,
                   dark: true,
@@ -76,7 +73,8 @@ class HomePageContent extends StatelessWidget {
                 width: size.width * 0.01,
               ),
               MainCustomButton(
-                  title: 'Tạo ảnh cũ',
+                  index: 1,
+                  title: 'Tạo ảnh bộ lọc cho ảnh',
                   active: active,
                   nonactive: nonactive,
                   dark: false,

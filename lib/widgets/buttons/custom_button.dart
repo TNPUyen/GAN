@@ -11,6 +11,7 @@ class MainCustomButton extends StatelessWidget {
   final Color nonactive;
   final bool dark;
   final String pageRoute;
+  final int index;
 
   const MainCustomButton(
       {Key? key,
@@ -18,14 +19,15 @@ class MainCustomButton extends StatelessWidget {
       required this.active,
       required this.nonactive,
       required this.dark,
-      required this.pageRoute})
+      required this.pageRoute, 
+      required this.index})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomButtonHoverAnimation(
       height: 50,
-      width: ResponsiveWidget.isSmallScreen(context)? 150 :200,
+      width: changeWidth(context),
       thickness: 1.2,
       curve: Curves.easeInOutSine,
       milliseconds: 500,
@@ -37,5 +39,21 @@ class MainCustomButton extends StatelessWidget {
       title: title,
       dark: dark,
     );
+  }
+
+  double changeWidth(context){
+    if(ResponsiveWidget.isSmallScreen(context)){
+      if(index == 0){
+        return 150;
+      }else{
+        return 205;
+      }
+    }else{
+      if(index == 0){
+        return 200;
+      }else{
+        return 250;
+      }
+    }
   }
 }

@@ -36,9 +36,10 @@ class _SpoilPhotoPageState extends State<SpoilPhotoPage> {
         children: <Widget>[
           Center(
             child: Text(
-              "Tạo ảnh thông qua bộ lọc",
+              "Tạo bộ lọc cho ảnh",
               style: GoogleFonts.mavenPro(
-                fontSize: 50,
+                fontSize: 70,
+                fontWeight: FontWeight.w800,
                 letterSpacing: 3,
                 height: 1.6,
               ),
@@ -50,12 +51,12 @@ class _SpoilPhotoPageState extends State<SpoilPhotoPage> {
           SizedBox(
             height: size.height * 0.03,
           ),
-          if (ResponsiveWidget.isLargeScreen(context))
-            LargeScreenRepairPhotoContent(),
-          if (ResponsiveWidget.isMediumScreen(context))
-            MediumScreenRepairPhotoContent(),
-          if (ResponsiveWidget.isSmallScreen(context))
-            SmallScreenRepairPhotoContent()
+          // if (ResponsiveWidget.isLargeScreen(context))
+          // LargeScreenRepairPhotoContent(),
+          // if (ResponsiveWidget.isMediumScreen(context))
+          //   MediumScreenRepairPhotoContent(),
+          // if (ResponsiveWidget.isSmallScreen(context))
+          //   SmallScreenRepairPhotoContent()
         ],
       ),
     );
