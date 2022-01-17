@@ -51,14 +51,14 @@ class HomePageContent extends StatelessWidget {
           SizedBox(
             height: size.width * 0.005,
           ),
-          Text(
-            'Được thực hiện bởi',
-            style: GoogleFonts.mavenPro(
-                fontSize: 16, fontWeight: FontWeight.w300, height: 1.6),
-          ),
-          Text(
-            'Trần Ngọc Phương Uyên\nVăn Hữu Gia Kiên',
-          ),
+          // Text(
+          //   'Được thực hiện bởi',
+          //   style: GoogleFonts.mavenPro(
+          //       fontSize: 16, fontWeight: FontWeight.w300, height: 1.6),
+          // ),
+          // Text(
+          //   'Trần Ngọc Phương Uyên\nVăn Hữu Gia Kiên',
+          // ),
           Wrap(
             runSpacing: 8,
             children: <Widget>[

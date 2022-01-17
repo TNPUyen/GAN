@@ -1,15 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:io';
 import 'dart:typed_data';
-import 'package:file_picker/file_picker.dart';
-// import 'package:file_picker_cross/file_picker_cross.dart';
 import 'package:gan/helpers/responsive.dart';
-import 'package:gan/services/upload_image_service.dart';
 import 'package:gan/widgets/display/image_display.dart';
-import 'package:path/path.dart';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:gan/constants/style.dart';
 import 'package:gan/widgets/display/components/buttons/large_screen_button.dart';
@@ -93,7 +86,7 @@ class _LargeScreenRepairPhotoContentState
                               width: size.width * 0.02,
                             ),
                             RepairedImageDisplay(
-                                imageSelected: widget.imageSelected,
+                                imageSelected: widget.imageRepaired,
                                 size: size),
                           ],
                         )
@@ -179,6 +172,4 @@ class _LargeScreenRepairPhotoContentState
       ),
     );
   }
-
-  Future _download(image, fileName) async {}
 }

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gan/helpers/responsive.dart';
 import 'package:gan/services/upload_image_service.dart';
@@ -78,6 +79,7 @@ class _RepairPhotoPageState extends State<RepairPhotoPage> {
               upload: _upload,
               repair: () => {_repair(imageSelected, fileName)},
               imageSelected: imageSelected,
+              imageRepaired: imageRepaired,
               image: image,
               isRepair: repair,
               isLoading: isLoading,
@@ -87,6 +89,7 @@ class _RepairPhotoPageState extends State<RepairPhotoPage> {
               upload: _upload,
               repair: () => {_repair(imageSelected, fileName)},
               imageSelected: imageSelected,
+              imageRepaired: imageRepaired,
               image: image,
               isRepair: repair,
               isLoading: isLoading,
@@ -122,11 +125,15 @@ class _RepairPhotoPageState extends State<RepairPhotoPage> {
     setState(() {
       isLoading = true;
     });
+
     // ignore: prefer_typing_uninitialized_variables
     var result;
     result = await uploadImage.uploadImage(imageSelected, filename);
 
     if (result != null) {
+      if (!kIsWeb) {
+        image!.writeAsBytesSync(base64Decode(result['content']));
+      }
       setState(() => {
             repair = true,
             imageRepaired = base64Decode(result['content']),
@@ -135,16 +142,16 @@ class _RepairPhotoPageState extends State<RepairPhotoPage> {
     }
   }
 
-  Future _download(image, fileName) async {
-    // Uint8List pngBytes = image!.buffer.asUint8List();
-    // final _base64 = base64Encode(pngBytes);
-    // final anchorElement = AnchorElement()
-    //   ..href = 'data:application/octet-stream;base64,$_base64'
-    //   ..download = fileName + '_new';
-    //
-    // anchorElement.click();
-    // // anchorElement.remove();
-    // String? selectedDirectory = await FilePicker.platform.getDirectoryPath(dialogTitle: 'want to save it?');
-    // print(selectedDirectory);
-  }
+  // Future _download(image, fileName) async {
+  // Uint8List pngBytes = image!.buffer.asUint8List();
+  // final _base64 = base64Encode(pngBytes);
+  // final anchorElement = AnchorElement()
+  //   ..href = 'data:application/octet-stream;base64,$_base64'
+  //   ..download = fileName + '_new';
+  //
+  // anchorElement.click();
+  // // anchorElement.remove();
+  // String? selectedDirectory = await FilePicker.platform.getDirectoryPath(dialogTitle: 'want to save it?');
+  // print(selectedDirectory);
+  // }
 }

@@ -1,11 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:gan/services/upload_image_service.dart';
 import 'package:gan/widgets/display/image_display.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path/path.dart';
@@ -19,6 +16,7 @@ class SmallScreenRepairPhotoContent extends StatefulWidget {
   final void Function() upload;
   final void Function() repair;
   final Uint8List? imageSelected;
+  final Uint8List? imageRepaired;
   final File? image;
   final bool? isRepair;
   final bool? isLoading;
@@ -30,7 +28,8 @@ class SmallScreenRepairPhotoContent extends StatefulWidget {
       required this.imageSelected,
       required this.image,
       required this.isRepair,
-      required this.isLoading})
+      required this.isLoading,
+      this.imageRepaired})
       : super(key: key);
 
   @override
@@ -71,7 +70,7 @@ class _SmallScreenRepairPhotoContentState
               widget.image != null
                   ? widget.isRepair == true
                       ? RepairedImageDisplay(
-                          imageSelected: widget.imageSelected,
+                          imageSelected: widget.imageRepaired,
                           imageRepaired: widget.image,
                           size: size)
                       : widget.isLoading == true

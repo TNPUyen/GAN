@@ -3,10 +3,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:gan/helpers/responsive.dart';
-import 'package:gan/widgets/display/components/large_screen/large_screen_repairphoto.dart';
-import 'package:gan/widgets/display/components/medium_screen/medium_screen_repairphoto.dart';
-import 'package:gan/widgets/display/components/small_screen/small_screen_repairphoto.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SpoilPhotoPage extends StatefulWidget {

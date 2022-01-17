@@ -1,15 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
-import 'package:gan/helpers/responsive.dart';
-import 'package:gan/services/upload_image_service.dart';
 import 'package:gan/widgets/display/image_display.dart';
-import 'package:path/path.dart';
-
 import 'package:flutter/material.dart';
 import 'package:gan/constants/style.dart';
 import 'package:gan/widgets/display/components/buttons/large_screen_button.dart';
@@ -17,6 +10,7 @@ import 'package:gan/widgets/display/components/buttons/large_screen_button.dart'
 class MediumScreenRepairPhotoContent extends StatefulWidget {
   final void Function() upload;
   final void Function() repair;
+  final Uint8List? imageRepaired;
   final Uint8List? imageSelected;
   final File? image;
   final bool? isRepair;
@@ -26,6 +20,7 @@ class MediumScreenRepairPhotoContent extends StatefulWidget {
       {Key? key,
       required this.upload,
       required this.repair,
+      required this.imageRepaired,
       required this.imageSelected,
       required this.image,
       required this.isRepair,
@@ -68,7 +63,7 @@ class _MediumScreenRepairPhotoContentState
               widget.imageSelected != null
                   ? widget.isRepair == true
                       ? RepairedImageDisplay(
-                          imageSelected: widget.imageSelected,
+                          imageSelected: widget.imageRepaired,
                           imageRepaired: widget.image,
                           size: size)
                       : widget.isLoading == true
@@ -138,6 +133,4 @@ class _MediumScreenRepairPhotoContentState
       ),
     );
   }
-
-  _download(image, fileName) async {}
 }
