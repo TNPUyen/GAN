@@ -49,6 +49,9 @@ class _SmallScreenRepairPhotoContentState
   Widget build(BuildContext context) {
     final fileName = widget.image != null ? basename(widget.image!.path) : "";
     Size size = MediaQuery.of(context).size;
+    if(widget.imageSelected!=null){
+      print('hi');
+    }
 
     return SizedBox(
       width: size.width * 0.8,

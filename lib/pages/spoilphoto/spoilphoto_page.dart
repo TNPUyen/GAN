@@ -3,6 +3,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:gan/helpers/responsive.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SpoilPhotoPage extends StatefulWidget {
@@ -34,7 +35,11 @@ class _SpoilPhotoPageState extends State<SpoilPhotoPage> {
             child: Text(
               "Tạo bộ lọc cho ảnh",
               style: GoogleFonts.mavenPro(
-                fontSize: 70,
+                fontSize: ResponsiveWidget.isLargeScreen(context)
+                    ? 70
+                    : ResponsiveWidget.isMediumScreen(context)
+                    ? 60
+                    : 50,
                 fontWeight: FontWeight.w800,
                 letterSpacing: 3,
                 height: 1.6,
@@ -44,8 +49,15 @@ class _SpoilPhotoPageState extends State<SpoilPhotoPage> {
           SizedBox(
             height: size.height * 0.03,
           ),
-          SizedBox(
-            height: size.height * 0.03,
+          Center(
+            child: Text(
+              "Chức năng đang trong quá trình phát triển",
+              style: GoogleFonts.mavenPro(
+                fontSize: 30,
+                letterSpacing: 3,
+                height: 1.6,
+              ),
+            ),
           ),
           // if (ResponsiveWidget.isLargeScreen(context))
           // LargeScreenRepairPhotoContent(),

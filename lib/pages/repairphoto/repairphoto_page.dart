@@ -100,21 +100,29 @@ class _RepairPhotoPageState extends State<RepairPhotoPage> {
   }
 
   void _upload() async {
+      dynamic path;
     final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowedExtensions: ['jpg', 'png'],
         allowMultiple: false);
-    // final result = await FilePickerCross.importFromStorage(
-    //   type: FileTypeCross.image,
-    //   fileExtension: 'jpg, png'
-    // );
 
     if (result == null) return;
     final name = result.files.single.name;
-    final path = result.files.single.bytes;
+      kIsWeb ? path = result.files.single.bytes : path = result.files.single.path;
+      setState(() => {
+            kIsWeb
+                ? {image = File(name), imageSelected = path}
+                : {
+                    image = File(path!),
+                    imageSelected = File(path!).readAsBytesSync()
+                  },
+            repair = false
+          });
+
     base64Image = base64Encode(path!);
 
     setState(() => {image = File(name), imageSelected = path, repair = false});
+
     // result.exportToStorage();
   }
 
@@ -131,9 +139,9 @@ class _RepairPhotoPageState extends State<RepairPhotoPage> {
     result = await uploadImage.uploadImage(imageSelected, filename);
 
     if (result != null) {
-      if (!kIsWeb) {
-        image!.writeAsBytesSync(base64Decode(result['content']));
-      }
+      // if (!kIsWeb) {
+      //   image!.writeAsBytesSync(base64Decode(result['content']));print('vào đây');
+      // }
       setState(() => {
             repair = true,
             imageRepaired = base64Decode(result['content']),
