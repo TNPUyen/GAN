@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable, prefer_const_constructors, use_key_in_widget_constructors
-
 import 'package:flutter/material.dart';
 import 'package:gan/routes/route.dart';
 import 'package:gan/widgets/navbar/desktop/desktop_navbar.dart';
